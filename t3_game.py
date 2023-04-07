@@ -46,71 +46,42 @@ def check_winner():
         if game_board[0][i] == game_board[1][i] == game_board[2][i] != 0:
             game = False
             if game_board[0][i] == 'X':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 1 won!")
-                play = 1
-                add_scores(play)
+                p1_win()
             if game_board[0][i] == 'O':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 2 won!")
-                play = 2
-                add_scores(play)
+                p2_win()
             break
 
         # CHECKS ROWS
         elif game_board[i][0] == game_board[i][1] == game_board[i][2] != 0:
             game = False
             if game_board[i][0] == 'X':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 1 won!")
-                play = 1
-                add_scores(play)
+                p1_win()
             if game_board[i][0] == 'O':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 2 won!")
-                play = 2
-                add_scores(play)
+                p2_win()
             break
 
         # CHECK DIAGONAL
         elif game_board[0][0] == game_board[1][1] == game_board[2][2] != 0:
             game = False
             if game_board[0][0] == 'X':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 1 won!")
-                play = 1
-                add_scores(play)
+                p1_win()
             if game_board[0][0] == 'O':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 2 won!")
-                play = 2
-                add_scores(play)
+                p2_win()
             break
         elif game_board[0][2] == game_board[1][1] == game_board[2][0] != 0:
             game = False
             if game_board[1][1] == 'X':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 1 won!")
-                play = 1
-                add_scores(play)
+                p1_win()
             if game_board[1][1] == 'O':
-                win_msg = messagebox.showinfo(
-                    message="Congratulations!\nPlayer 2 won!")
-                play = 2
-                add_scores(play)
+                p2_win()
             break
 
         # CHECK TIE
         elif game_board[0][0] and game_board[0][1] and game_board[0][2] and game_board[1][0] and game_board[1][1] and game_board[1][2] and game_board[2][0] and game_board[2][1] and game_board[2][2] != 0:
             game = False
-            win_msg = messagebox.askquestion(
-                message="Tie Game, try again?")
-            if win_msg == 'yes':
-                game = True
-                new_game = True
-                start_game()
-            if win_msg == 'no':
-                quit()
+            win_msg = messagebox.showinfo(
+                message="Tie Game!")
+            quit()
 
 # not sure this is implemented well?
 
@@ -124,8 +95,25 @@ def add_scores(play):
         p2_score += 1
         return str(p2_score-1)
 
+# display if P1 wins
 
-def start_game():
+
+def p1_win():
+    win_msg = messagebox.showinfo(
+        message="Congratulations!\nPlayer 1 won!")
+    add_scores(1)
+    quit()
+
+
+# display if P2 wins
+def p2_win():
+    win_msg = messagebox.showinfo(
+        message="Congratulations!\nPlayer 2 won!")
+    add_scores(2)
+    quit()
+
+
+def start_game(master):
     global root, new_game, game_board, game_button, player
     # creating game window
     if (new_game):
@@ -136,7 +124,6 @@ def start_game():
         game_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 
     root = Tk()
-    # root = Toplevel(root)
 
     # title game window
     root.title("Tic-Tac-Toe!")
